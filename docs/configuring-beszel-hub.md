@@ -62,17 +62,19 @@ beszel_hub_hostname: "beszel.example.com"
 
 After adjusting the hostname, make sure to adjust your DNS records to point the domain to your server.
 
-### Create the initial user (optional)
+### Setting administrator's account details (optional)
 
-By default, the Beszel hub asks you to create the first user account on the web interface. You can also have the account created automatically on the first start by adding the following configuration to your `vars.yml` file:
+By default, the Beszel hub asks you to create an administrator's account on the web interface. If this is insecure for you, you can also have the account created automatically on the first start by adding the following configuration to your `vars.yml` file:
 
 ```yaml
-beszel_hub_environment_variable_user_email: admin@example.com
-beszel_hub_environment_variable_user_password: YOUR_PASSWORD_HERE
+beszel_hub_environment_variable_user_email: ADMIN_EMAIL_ADDRESS_HERE
+beszel_hub_environment_variable_user_password: ADMIN_PASSWORD_HERE
 ```
 
->[!WARNING]
-> These values only take effect on the very first start of the hub. Changing them afterwards has no effect — change the account on the web interface instead.
+Generating a strong password (e.g. `pwgen -s 64 1`) is recommended for `beszel_hub_environment_variable_user_password`.
+
+>[!NOTE]
+> Subsequent changes to them will not affect the existing user. The password can be updated on the Beszel hub's UI.
 
 ### Connect a local agent via Unix socket (optional)
 
