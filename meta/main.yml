@@ -1,9 +1,10 @@
 ---
 galaxy_info:
   author: Bergruebe
+  company: bergruebe
   role_name: beszel_hub
   namespace: mash
-  description: Ansible role to install the Beszel hub, a lightweight server monitoring platform.
+  description: Ansible role to install the Beszel hub
   platforms:
     - name: Debian
       versions:
