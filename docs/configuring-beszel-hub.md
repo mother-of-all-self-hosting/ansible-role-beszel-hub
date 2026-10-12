@@ -57,7 +57,7 @@ beszel_hub_enabled: true
 To enable the Beszel hub you need to set the hostname as well. To do so, add the following configuration to your `vars.yml` file. Make sure to replace `example.com` with your own value.
 
 ```yaml
-beszel_hub_hostname: "beszel.example.com"
+beszel_hub_hostname: "example.com"
 ```
 
 After adjusting the hostname, make sure to adjust your DNS records to point the domain to your server.
@@ -116,14 +116,14 @@ beszel_hub_environment_variable_disable_password_auth: true
 On Pocket ID's admin interface, go to "OIDC Clients" and add a client with the following callback URL:
 
 ```txt
-https://beszel.example.com/api/oauth2-redirect
+https://example.com/api/oauth2-redirect
 ```
 
 If the hub is reachable on several URLs (e.g. via Traefik and via [Tailscale](#using-the-beszel-hub-with-tailscale-tsdproxy-optional)), add a callback URL for each of them. Then note down the client ID and the client secret.
 
 #### Adding the provider on the Beszel hub
 
-Log in to the PocketBase admin interface at `https://beszel.example.com/_/` with a superuser account (the first user created on the hub is a superuser as well), and then:
+Log in to the PocketBase admin interface at `https://example.com/_/` with a superuser account (the first user created on the hub is a superuser as well), and then:
 
 1. Open "Settings", and turn off "Hide collection create and edit controls".
 2. Go to "Collections", open the settings of the `users` collection, and select the "Options" tab.
