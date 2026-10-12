@@ -86,7 +86,7 @@ beszel_hub_container_labels_traefik_tls_certResolver: default  # noqa var-naming
 # beszel_hub_container_labels_tsdproxy_enabled controls whether labels for TSDProxy will be attached to the container,
 # so that the hub becomes reachable in your Tailscale network (tailnet) at `https://<name>.<tailnet>.ts.net`.
 # TSDProxy needs to share a container network with the hub (see `beszel_hub_container_additional_networks_custom`).
-# See: https://almeidapaulopt.github.io/tsdproxy/docs/docker/
+# See: https://almeidapaulopt.github.io/tsdproxy/docs/providers/docker/
 beszel_hub_container_labels_tsdproxy_enabled: false
 # The machine name in the tailnet. Defaults to the container name.
 beszel_hub_container_labels_tsdproxy_name: "{{ beszel_hub_identifier }}"

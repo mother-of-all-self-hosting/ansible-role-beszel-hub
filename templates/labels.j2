@@ -58,9 +58,8 @@ traefik.http.services.{{ beszel_hub_identifier }}.loadbalancer.server.port={{ be
 {% if beszel_hub_container_labels_tsdproxy_enabled %}
 tsdproxy.enable=true
 tsdproxy.name={{ beszel_hub_container_labels_tsdproxy_name }}
-tsdproxy.container_port={{ beszel_hub_container_http_port }}
+tsdproxy.port.1=443/https:{{ beszel_hub_container_http_port }}/http{{ ', tailscale_funnel' if beszel_hub_container_labels_tsdproxy_funnel | bool else '' }}
 tsdproxy.ephemeral={{ beszel_hub_container_labels_tsdproxy_ephemeral | to_json }}
-tsdproxy.funnel={{ beszel_hub_container_labels_tsdproxy_funnel | to_json }}
 tsdproxy.dash.visible={{ beszel_hub_container_labels_tsdproxy_dash_visible | to_json }}
 tsdproxy.dash.label={{ beszel_hub_container_labels_tsdproxy_dash_label }}
 {% endif %}

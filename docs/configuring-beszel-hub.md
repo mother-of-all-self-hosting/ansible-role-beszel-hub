@@ -161,7 +161,7 @@ The values above match a Pocket ID instance installed by the [MASH playbook](htt
 
 ### Using the Beszel hub with Tailscale (TSDProxy) (optional)
 
-[TSDProxy](https://almeidapaulopt.github.io/tsdproxy/) makes containers reachable in your Tailscale network (tailnet) at `https://<name>.<tailnet>.ts.net`, with a TLS certificate issued by Tailscale. This is useful for the Beszel hub in two ways: agents can connect to the hub over the tailnet, and the web interface can optionally be made reachable over the tailnet only.
+[TSDProxy](https://almeidapaulopt.github.io/tsdproxy/) makes containers reachable in your Tailscale network (tailnet) at `https://<name>.<tailnet>.ts.net`, with a TLS certificate issued by Tailscale. This is useful for the Beszel hub in two ways: agents can connect to the hub over the tailnet, and the web interface can optionally be made reachable over the tailnet only. This requires TSDProxy v2 or later.
 
 #### Exposing the hub via TSDProxy
 
