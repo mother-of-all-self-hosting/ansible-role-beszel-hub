@@ -28,10 +28,6 @@ beszel_hub_path_prefix: /
 # The scheme at which the Beszel hub is reachable. Only used for building `beszel_hub_environment_variables_app_url`.
 beszel_hub_scheme: https
 
-# The public URL of the hub. Used for links in emails and notifications.
-# Controls the `APP_URL` environment variable.
-beszel_hub_environment_variables_app_url: "{{ beszel_hub_scheme }}://{{ beszel_hub_hostname }}{{ '' if beszel_hub_path_prefix == '/' else beszel_hub_path_prefix }}"
-
 beszel_hub_container_image: "{{ beszel_hub_container_image_registry_prefix }}henrygd/beszel:{{ beszel_hub_container_image_tag }}"
 beszel_hub_container_image_registry_prefix: "{{ beszel_hub_container_image_registry_prefix_upstream }}"
 beszel_hub_container_image_registry_prefix_upstream: "{{ beszel_hub_container_image_registry_prefix_upstream_default }}"
@@ -250,6 +246,10 @@ beszel_hub_agent_socket_path_container: /beszel_socket
 
 # Specify the timezone
 beszel_hub_environment_variables_tz: UTC
+
+# Specify The public URL of the hub.
+# Used for links in emails and notifications.
+beszel_hub_environment_variables_app_url: "{{ beszel_hub_scheme }}://{{ beszel_hub_hostname }}{{ '' if beszel_hub_path_prefix == '/' else beszel_hub_path_prefix }}"
 
 # Controls the `CHECK_UPDATES` environment variable.
 # Enables checking for new Beszel versions and showing a notification in the web UI.
