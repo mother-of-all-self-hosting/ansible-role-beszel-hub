@@ -14,10 +14,6 @@ This role installs the hub only. The agents are to be installed separately on th
 
 See the project's [documentation](https://beszel.dev/guide/what-is-beszel) to learn what Beszel does and why it might be useful to you.
 
-## Prerequisites
-
-Beszel needs no separate database server. The hub stores its data (an SQLite database managed by PocketBase, and the SSH key pair used to connect to agents) in the directory specified with `beszel_hub_data_path`.
-
 ## Adjusting the playbook configuration
 
 To enable the Beszel hub with this role, add the following configuration to your `vars.yml` file.
@@ -49,17 +45,6 @@ beszel_hub_hostname: "beszel.example.com"
 ```
 
 After adjusting the hostname, make sure to adjust your DNS records to point the domain to your server.
-
-### Set the path prefix (optional)
-
-The Beszel hub can be hosted under a subpath. To do so, add the following configuration to your `vars.yml` file:
-
-```yaml
-# The value must either be `/` or not end with a slash.
-beszel_hub_path_prefix: /beszel
-```
-
-The public URL of the hub (Beszel's `APP_URL`), which is used for links in emails and notifications, is derived from `beszel_hub_hostname` and `beszel_hub_path_prefix` automatically. You can override it with `beszel_hub_app_url`.
 
 ### Create the initial user (optional)
 
@@ -235,16 +220,6 @@ Take a look at:
 - [`defaults/main.yml`](../defaults/main.yml) for some variables that you can customize via your `vars.yml` file. You can override settings (even those that don't have dedicated playbook variables) using the `beszel_hub_environment_variables_additional_variables` variable
 
 See [this page](https://beszel.dev/guide/environment-variables) of the official documentation for Beszel's config options that you could put in `beszel_hub_environment_variables_additional_variables`.
-
-## Hardening the container
-
-The hub container is started with the following hardening options:
-
-- it runs as the non-root user specified with `beszel_hub_uid` and `beszel_hub_gid`
-- all Linux capabilities are dropped (`--cap-drop=ALL`) and privilege escalation is prevented (`--security-opt=no-new-privileges`)
-- the root filesystem is read-only (`--read-only`)
-
-The only writable locations inside the container are the data directory (`/beszel_data`, bind-mounted from `beszel_hub_data_path`), the optional agent socket directory (`/beszel_socket`), and `/tmp`, which is a `tmpfs` mount whose size is controlled by `beszel_hub_container_tmpfs_tmp_size`.
 
 ## Installing
 
