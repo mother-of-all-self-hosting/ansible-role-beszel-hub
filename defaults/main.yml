@@ -25,12 +25,12 @@ beszel_hub_hostname: ""
 # This value must either be `/` or not end with a slash (e.g. `/beszel`).
 beszel_hub_path_prefix: /
 
-# The scheme at which the Beszel hub is reachable. Only used for building `beszel_hub_app_url`.
+# The scheme at which the Beszel hub is reachable. Only used for building `beszel_hub_environment_variables_app_url`.
 beszel_hub_scheme: https
 
 # The public URL of the hub. Used for links in emails and notifications.
 # Controls the `APP_URL` environment variable.
-beszel_hub_app_url: "{{ beszel_hub_scheme }}://{{ beszel_hub_hostname }}{{ '' if beszel_hub_path_prefix == '/' else beszel_hub_path_prefix }}"
+beszel_hub_environment_variables_app_url: "{{ beszel_hub_scheme }}://{{ beszel_hub_hostname }}{{ '' if beszel_hub_path_prefix == '/' else beszel_hub_path_prefix }}"
 
 beszel_hub_container_image: "{{ beszel_hub_container_image_registry_prefix }}henrygd/beszel:{{ beszel_hub_container_image_tag }}"
 beszel_hub_container_image_registry_prefix: "{{ beszel_hub_container_image_registry_prefix_upstream }}"
