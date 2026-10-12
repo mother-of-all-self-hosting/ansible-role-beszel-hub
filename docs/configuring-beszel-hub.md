@@ -108,21 +108,6 @@ beszel_hub_environment_variable_disable_password_auth: true
 >[!NOTE]
 > These settings are enforced on every start of the hub. Change them with the variables above, not on the PocketBase admin interface, as changes made there are overwritten.
 
-#### Communication between the hub and the provider
-
-During the login, the browser is redirected to the provider's public URL, while the hub itself has to request a token and the user info from the provider. The hub can do the latter over a container network, without leaving the server. Pocket ID supports this setup out of the box: the authorization endpoint is served on its public URL, while the token and user info endpoints can be requested on its internal address.
-
-For this, the hub container needs to be connected to the provider's container network:
-
-```yaml
-# The container network of Pocket ID (`pocket_id_container_network`)
-beszel_hub_container_additional_networks_custom:
-  - pocket_id
-```
-
->[!NOTE]
-> If you use the [MASH playbook](https://github.com/mother-of-all-self-hosting/mash-playbook), the hub is connected to the network of the Pocket ID instance installed by the playbook automatically.
-
 #### Creating the OIDC client on Pocket ID
 
 On Pocket ID's admin interface, go to "OIDC Clients" and add a client with the following callback URL:
@@ -140,21 +125,39 @@ Log in to the PocketBase admin interface at `https://beszel.example.com/_/` with
 1. Open "Settings", and turn off "Hide collection create and edit controls".
 2. Go to "Collections", open the settings of the `users` collection, and select the "Options" tab.
 3. Enable "OAuth2", click "Add provider", and select "OpenID Connect".
-4. Fill in the fields as below, replacing `pocketid.example.com` with Pocket ID's hostname and `mash-pocket-id` with its container name (`pocket_id_identifier`):
+4. Fill in the fields as below, replacing `pocketid.example.com` with Pocket ID's hostname:
 
    | Field | Value |
    | --- | --- |
    | Client ID / Client secret | the values from Pocket ID |
    | Display name | `Pocket ID` |
    | Auth URL | `https://pocketid.example.com/authorize` |
-   | Token URL | `http://mash-pocket-id:1411/api/oidc/token` |
+   | Token URL | `https://pocketid.example.com/api/oidc/token` |
    | Fetch user info from | User info URL |
-   | User info URL | `http://mash-pocket-id:1411/api/oidc/userinfo` |
+   | User info URL | `https://pocketid.example.com/api/oidc/userinfo` |
    | Support PKCE | enabled |
 
-Only the auth URL is opened by the browser, so it has to be the public one. The token and user info URLs are requested by the hub over the container network, and therefore point to Pocket ID's container and its port (`pocket_id_container_http_port`, `1411` by default).
-
 After saving the settings, the login page of the Beszel hub shows a button to log in with Pocket ID.
+
+#### Reaching Pocket ID over a container network (optional)
+
+During the login, the browser opens the auth URL, while the hub itself requests the token and the user info. If Pocket ID runs on the same server as the hub, the hub can make these requests over a container network instead of going through Pocket ID's public URL.
+
+For this, connect the hub to Pocket ID's container network (`pocket_id_container_network`):
+
+```yaml
+beszel_hub_container_additional_networks_custom:
+  - mash-pocket-id
+```
+
+Then point the token and user info URLs to Pocket ID's container (`pocket_id_identifier`) and its port (`pocket_id_container_http_port`, `1411` by default):
+
+| Field | Value |
+| --- | --- |
+| Token URL | `http://mash-pocket-id:1411/api/oidc/token` |
+| User info URL | `http://mash-pocket-id:1411/api/oidc/userinfo` |
+
+The values above match a Pocket ID instance installed by the [MASH playbook](https://github.com/mother-of-all-self-hosting/mash-playbook) with its default settings. The auth URL has to stay the public one, as it is opened by the browser.
 
 ### Using the Beszel hub with Tailscale (TSDProxy) (optional)
 
@@ -221,7 +224,7 @@ beszel_hub_hostname: mash-beszel-hub.tail1234.ts.net
 
 The hub is then not reachable from the internet at all, and agents can only connect to it over the tailnet as described above.
 
-Single sign-on with Pocket ID keeps working in this setup, as long as Pocket ID itself is reachable for your browser: the browser opens Pocket ID's auth URL, while the hub talks to Pocket ID over the container network. Make sure to register `https://mash-beszel-hub.tail1234.ts.net/api/oauth2-redirect` as the callback URL on Pocket ID.
+Single sign-on with Pocket ID keeps working in this setup, as long as Pocket ID itself is reachable for your browser: the browser opens Pocket ID's auth URL, while the hub requests the token and the user info by itself. Make sure to register `https://mash-beszel-hub.tail1234.ts.net/api/oauth2-redirect` as the callback URL on Pocket ID.
 
 ### Extending the configuration
 
