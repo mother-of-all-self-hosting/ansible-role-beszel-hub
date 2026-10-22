@@ -13,7 +13,7 @@ beszel_hub_data_path: "{{ beszel_hub_base_path }}/data"
 beszel_hub_socket_path: "{{ beszel_hub_base_path }}/socket"
 
 # renovate: datasource=docker depName=henrygd/beszel versioning=semver
-beszel_hub_version: 0.21.0
+beszel_hub_version: 0.21.1
 
 beszel_hub_uid: ""
 beszel_hub_gid: ""
