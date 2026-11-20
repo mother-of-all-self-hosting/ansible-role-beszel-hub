@@ -22,9 +22,6 @@
   with_items:
     - beszel_hub_uid
     - beszel_hub_gid
-    - beszel_hub_hostname
-    - beszel_hub_path_prefix
-    - beszel_hub_container_network
 
 # We ensure it doesn't end with a slash, because we handle both (slash and no-slash).
 - name: Fail if beszel_hub_path_prefix ends with a slash
