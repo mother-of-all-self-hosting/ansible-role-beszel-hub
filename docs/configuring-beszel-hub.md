@@ -13,6 +13,7 @@ SPDX-FileCopyrightText: 2023 Antonis Christofides
 SPDX-FileCopyrightText: 2023 Felix Stupp
 SPDX-FileCopyrightText: 2023 Julian-Samuel Gebühr
 SPDX-FileCopyrightText: 2023 Pierre 'McFly' Marty
+SPDX-FileCopyrightText: 2024 Sergio Durigan Junior
 SPDX-FileCopyrightText: 2024 Thomas Miceli
 SPDX-FileCopyrightText: 2024-2026 Suguru Hirahara
 SPDX-FileCopyrightText: 2026 Bergruebe
@@ -228,6 +229,20 @@ beszel_hub_hostname: mash-beszel-hub.tail1234.ts.net
 The hub is then not reachable from the internet at all, and agents can only connect to it over the tailnet as described above.
 
 Single sign-on with Pocket ID keeps working in this setup, as long as Pocket ID itself is reachable for your browser: the browser opens Pocket ID's auth URL, while the hub requests the token and the user info by itself. Make sure to register `https://mash-beszel-hub.tail1234.ts.net/api/oauth2-redirect` as the callback URL on Pocket ID.
+
+### Configuring trusted reverse proxies (optional)
+
+The Beszel hub determines the actual client IP address from `X-Forwarded-For` / `X-Real-IP` headers only if the request comes from a trusted reverse proxy (refer to [`trusted_proxies`](https://www.beszel.dev/guide/environment-variables#hub)).
+
+Since this role typically runs The Beszel hub behind a reverse proxy (e.g. Traefik) on a container network, it trusts the loopback and all private (RFC1918) address ranges by default.
+
+To adjust the list of trusted proxies, add the following configuration to your `vars.yml` file (adapt to your needs):
+
+```yaml
+:
+  - 127.0.0.0/8
+  - ::1/128
+```
 
 ### Extending the configuration
 

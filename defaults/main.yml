@@ -1,4 +1,11 @@
+# SPDX-FileCopyrightText: 2023, 2024 Nikita Chernyi
+# SPDX-FileCopyrightText: 2023-2025 MASH project contributors
+# SPDX-FileCopyrightText: 2023-2026 Slavi Pantaleev
+# SPDX-FileCopyrightText: 2024 Julian-Samuel Gebühr
+# SPDX-FileCopyrightText: 2024 Sergio Durigan Junior
+# SPDX-FileCopyrightText: 2025, 2026 Suguru Hirahara
 # SPDX-FileCopyrightText: 2026 Bergruebe
+# SPDX-FileCopyrightText: 2026 Timofej Luitle
 #
 # SPDX-License-Identifier: AGPL-3.0-or-later
 
@@ -280,9 +287,16 @@ beszel_hub_environment_variable_mfa_otp: false
 # Makes all systems visible and editable by all users.
 beszel_hub_environment_variable_share_all_systems: false
 
-# Controls the `TRUSTED_PROXY_IPS` environment variable.
-# Comma-separated IPs or CIDR ranges, which are allowed to set `beszel_hub_environment_variable_trusted_auth_header`.
-beszel_hub_environment_variable_trusted_proxy_ips: ""
+# Specify a comma-separated list of trusted proxy addresses, which are allowed to set `beszel_hub_environment_variable_trusted_auth_header`.
+#
+# The default below trusts the loopback and all private (RFC1918) address ranges,
+# which covers reverse proxies (e.g. Traefik) reaching the Beszel hub over a local container network.
+beszel_hub_environment_variable_trusted_proxy_ips:
+  - 127.0.0.0/8
+  - ::1/128
+  - 10.0.0.0/8
+  - 172.16.0.0/12
+  - 192.168.0.0/16
 
 # Controls the `TRUSTED_AUTH_HEADER` environment variable (forward authentication).
 beszel_hub_environment_variable_trusted_auth_header: ""
