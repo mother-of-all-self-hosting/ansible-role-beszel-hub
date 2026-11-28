@@ -50,9 +50,11 @@ ExecStartPre={{ devture_systemd_docker_base_host_command_docker }} create \
       {{ beszel_hub_container_image }} \
       serve --http=0.0.0.0:{{ beszel_hub_container_http_port }}
 
+{% if beszel_hub_container_network != 'host' %}
 {% for network in beszel_hub_container_additional_networks %}
 ExecStartPre={{ devture_systemd_docker_base_host_command_docker }} network connect {{ network }} {{ beszel_hub_identifier }}
 {% endfor %}
+{% endif %}
 
 ExecStart={{ devture_systemd_docker_base_host_command_docker }} start --attach {{ beszel_hub_identifier }}
 
